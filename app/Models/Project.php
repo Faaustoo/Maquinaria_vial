@@ -14,7 +14,8 @@ class Project extends Model
         'name',
         'start_date',
         'end_date',
-        'province_id'
+        'province_id',
+        'reason_id'
     ];
 
     public function province()
@@ -27,5 +28,11 @@ class Project extends Model
         return $this->hasMany(Assignment::class);
     }
 
-}
+     public function endReason()
+    {
+        return $this->belongsTo(EndReason::class, 'reason_id');
+    }
 
+    
+
+}

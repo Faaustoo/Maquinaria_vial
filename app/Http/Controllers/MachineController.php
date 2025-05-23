@@ -69,4 +69,14 @@ class MachineController extends Controller
 
         return redirect()->route('machines.index')->with('success', 'Máquina eliminada con éxito.');
     }
+
+    public function search(Request $request)
+{
+    $query = $request->input('q');
+
+    $machines = Machine::where('serial_number', 'LIKE', "%{$query}%")->with('MachineType')->get();
+
+    return response()->json($machines);
+}
+
 }

@@ -1,9 +1,13 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2>Agregar nueva máquina</h2>
-    </x-slot>
+   
+     
 
     <div class="max-w-2xl mx-auto p-4">
+        
+        <a href="{{ route('machines.index') }}"
+           class="inline-block mb-6 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+            ← Volver
+        </a>
         <form action="{{ route('machines.store') }}" method="POST">
             @csrf
             <div class="mb-4">
@@ -29,6 +33,7 @@
             </div>
 
             <div class="mb-4">
+                <label class="block text-gray-700 dark:text-gray-200">Maquina:</label>
                 <select name="type_id" class="w-full border rounded p-2">
                     <option value="" disabled {{ old('type_id') ? '' : 'selected' }}>Seleccionar tipo de máquina</option>
                     @foreach ($tipos as $tipo)
@@ -39,9 +44,7 @@
                 </select> 
             </div>
 
-            <div class="mb-4">
-                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Guardar</button>
-            </div>
+            <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded border border-black hover:bg-blue-600">Guardar cambios</button>
 
             @if ($errors->any())
                 <div class="bg-red-100 text-red-700 p-4 rounded mb-4">

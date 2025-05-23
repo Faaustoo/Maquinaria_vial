@@ -1,6 +1,11 @@
 <x-app-layout>
 
+  
     <div class="max-w-2xl mx-auto p-4">
+        <a href="{{ route('machines.index') }}"
+           class="inline-block mb-6 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+            ← Volver
+        </a>
         <form action="{{ route('machines.update', $machine->id) }}" method="POST">
             @csrf
             @method('PUT')

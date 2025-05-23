@@ -24,6 +24,10 @@
                         {{ __('Mantenimiento') }}
                     </x-nav-link>
 
+                    <x-nav-link :href="route('projects.index')" :active="request()->routeIs('projects*')">
+                        {{ __('Obras') }}
+                    </x-nav-link>
+
                     <x-nav-link :href="route('assignments.index')" :active="request()->routeIs('assignments*')">
                         {{ __('Asignaciones') }}
                     </x-nav-link>

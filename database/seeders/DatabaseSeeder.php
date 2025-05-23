@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Assignment;
-use App\Models\EndReason;
+
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,12 +13,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RoleSeeder::class,
             UserSeeder::class,
-            MachineTypeSeeder::class,
-            MachineSeeder::class,  
+            MachineTypeSeeder::class,  
             ProvinceSeeder::class,
-            ProjectSeeder::class,
-            MaintenanceSeeder::class,
             EndReasonSeeder::class,
+            ProjectSeeder::class,
+            MachineSeeder::class,
+            MaintenanceSeeder::class,
             AssignmentSeeder::class,
         ]);
     }

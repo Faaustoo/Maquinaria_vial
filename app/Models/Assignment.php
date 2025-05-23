@@ -16,12 +16,11 @@ class Assignment extends Model
         'machine_id',
         'project_id',
         'user_id',
-        'reason_id'
     ];
 
      public function machine()
     {
-        return $this->belongsTo(MachineType::class, 'type_id');
+        return $this->belongsTo(Machine::class, 'machine_id');
     }
 
      public function projects()
@@ -34,8 +33,4 @@ class Assignment extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-     public function endReason()
-    {
-        return $this->belongsTo(EndReason::class, 'reason_id');
-    }
 }

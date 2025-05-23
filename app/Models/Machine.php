@@ -13,7 +13,8 @@ class Machine extends Model
     protected $fillable = [
         'serial_number',
         'model',
-        'type_id'
+        'kilometers',
+        'type_id',
     ];
 
     public function machineType()
@@ -30,5 +31,6 @@ class Machine extends Model
     {
         return $this->hasMany(Assignment::class);
     }
+
 
 }

@@ -15,7 +15,8 @@ return new class extends Migration
         $table->id();
         $table->string('serial_number')->unique();
         $table->string('model');
-        $table->foreignId('type_id')->constrained('machine_types')->onDelete('cascade');  
+        $table->integer('kilometers')->nullable();
+        $table->foreignId('type_id')->constrained('machine_types')->onDelete('cascade');
         $table->timestamps();
 });
 

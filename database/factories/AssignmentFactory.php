@@ -23,11 +23,10 @@ class AssignmentFactory extends Factory
         return [
             'start_date' => fake()->dateTimeBetween('-1 year', 'now')->format('Y-m-d'),
             'end_date' => fake()->dateTimeBetween('now', '+1 year')->format('Y-m-d'),
-            'kilometers' => fake()->numberBetween(100, 10000),
+            'kilometers' => fake()->numberBetween(1, 100),
             'machine_id'=>Machine::inRandomOrder()->first()->id,
             'project_id'=>Project::inRandomOrder()->first()->id,
             'user_id'=>User::inRandomOrder()->first()->id,
-            'reason_id'=>EndReason::inRandomOrder()->first()->id,
         ];
     }
 }
