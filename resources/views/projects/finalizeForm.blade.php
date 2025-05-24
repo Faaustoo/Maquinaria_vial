@@ -1,39 +1,63 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto p-4">
-        <a href="{{ route('projects.index') }}"
-           class="inline-block mb-6 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+        <a href="{{ route('projects.index') }}" 
+           class="inline-block mb-6 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
             ← Volver
         </a>
 
-        <h2 class="text-xl font-bold mb-4">Finalizar Obra: {{ $project->name }}</h2>
+        <h2 class="text-xl font-bold mb-6 text-gray-900 dark:text-gray-100">
+            Finalizar Obra: {{ $project->name }}
+        </h2>
 
-<form method="POST" action="{{ route('projects.finish', $project->id) }}">
-    @csrf
+        {{-- Mostrar errores --}}
+        @if ($errors->any())
+            <div class="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+                @foreach ($errors->all() as $error)
+                    <p>{{ $error }}</p>
+                @endforeach
+            </div>
+        @endif
 
-    <div class="mb-4">
-        <label for="end_date" class="block font-semibold">Fecha de finalización:</label>
-        <input type="date" name="end_date" id="end_date" class="border p-2 w-full" >
+        <form method="POST" action="{{ route('projects.finish', $project->id) }}" 
+              class="bg-white dark:bg-gray-800 p-6 rounded shadow">
+            @csrf
+
+            <div class="mb-4">
+                <label for="end_date" class="block text-gray-700 dark:text-gray-200 mb-1 font-semibold">
+                    Fecha de finalización:
+                </label>
+                <input 
+                    type="date" 
+                    name="end_date" 
+                    id="end_date"
+                    class="w-full border border-gray-300 dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                >
+            </div>
+
+            <div class="mb-6">
+                <label for="reason_id" class="block text-gray-700 dark:text-gray-200 mb-1 font-semibold">
+                    Motivo de finalización:
+                </label>
+                <select 
+                    name="reason_id" 
+                    id="reason_id"
+                    class="w-full border border-gray-300 dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                >
+                    <option value="" disabled selected>Seleccione un motivo</option>
+                    @foreach($endReasons as $reason)
+                        <option value="{{ $reason->id }}">{{ $reason->description }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <button 
+                type="submit" 
+                class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition"
+            >
+                Finalizar Obra
+            </button>
+        </form>
     </div>
-
-    <div class="mb-4">
-        <label for="reason_id" class="block font-semibold">Motivo de finalización:</label>
-        <select name="reason_id" id="end_reason_id" class="border p-2 w-full" required>
-            @foreach($endReasons as $reason)
-                <option value="{{ $reason->id }}">{{ $reason->description }}</option>
-            @endforeach
-        </select>
-    </div>
-
-    <h3 class="font-semibold mt-4 mb-2">Kilómetros de cada máquina:</h3>
-@foreach($assignments as $assignment)
-    <div class="mb-2">
-        <label class="block">{{ $assignment->machine->serial_number }}</label>
-        <input type="number" name="kilometers[{{ $assignment->machine->id }}]" class="border p-2 w-full" placeholder="Kilómetros finales" required>
-    </div>
-@endforeach
-
-
-    <button type="submit" class="mt-4 bg-green-600 text-white px-4 py-2 rounded">Finalizar Obra</button>
-</form>
-
 </x-app-layout>

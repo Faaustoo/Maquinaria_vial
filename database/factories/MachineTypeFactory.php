@@ -11,13 +11,8 @@ class MachineTypeFactory extends Factory
         $names = [
             'Excavadora',
             'Retroexcavadora',
-            'Motoniveladora',
-            'Rodillo',
             'Camión volcador',
             'Hormigonera',
-            'Fresadora de asfalto',
-            'Terminadora de asfalto',
-            'Topadora',
             'Compactadora'
         ];
 

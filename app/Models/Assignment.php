@@ -18,19 +18,18 @@ class Assignment extends Model
         'user_id',
     ];
 
-     public function machine()
+    public function machine()
     {
         return $this->belongsTo(Machine::class, 'machine_id');
     }
 
-     public function projects()
+    public function project()
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
 
-     public function user()
+    public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
 }

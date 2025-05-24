@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Auth;
 
 class MaintenanceController extends Controller{
 
-    public function index()
-    {
-        $maintenances = Maintenance::with(['machine', 'user'])->paginate(10);
-        return view('maintenances.index', compact('maintenances'));
-    }
+   public function index()
+{
+    $maintenances = Maintenance::with(['machine', 'user'])->paginate(10);
+    $machines = Machine::all();  // Trae todas las máquinas
+
+    return view('maintenances.index', compact('maintenances', 'machines'));
+}
 
     public function create()
     {

@@ -14,22 +14,21 @@
             <ul class="space-y-4 text-gray-800 dark:text-gray-200">
                 <li>
                     <strong>Máquinas:</strong> 
-                    Visualizá todas las máquinas registradas. Podés agregar nuevas, editar sus datos o eliminarlas.
+                    Visualizá todas las máquinas registradas, donde se muestra número de serie, modelo, tipo y kilómetros. Podés agregar nuevas máquinas, editar sus datos o eliminarlas.
                 </li>
                 <li>
                     <strong>Mantenimientos:</strong> 
-                    Registrá los mantenimientos realizados a las máquinas, con fecha, descripción y kilómetros. También podés ver el historial o modificar registros.
+                    Registrá mantenimientos realizados a las máquinas con fecha, descripción y kilómetros. Podés agregar o editar registros, ver el historial completo de mantenimientos por máquina y corregir errores en los datos ingresados.
                 </li>
                 <li>
                     <strong>Obras:</strong> 
-                    Gestioná las obras activas. Cada obra tiene su nombre, provincia y fechas de inicio y fin.
+                    Gestioná las obras activas y finalizadas. Podés agregar nuevas obras, editar datos, finalizar una obra y visualizar las máquinas que trabajaron en cada obra finalizada.
                 </li>
                 <li>
                     <strong>Asignaciones:</strong> 
-                    Asigná máquinas a obras indicando el período en el que trabajarán. Podés finalizar asignaciones y consultar historial.
+                    Asigná máquinas disponibles a obras activas indicando el período de trabajo. Podés crear, editar y finalizar asignaciones. Además, se pueden consultar todas las asignaciones finalizadas con sus detalles completos.
                 </li>
             </ul>
         </div>
     </div>
 </x-app-layout>
-

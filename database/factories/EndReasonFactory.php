@@ -16,8 +16,12 @@ class EndReasonFactory extends Factory
      */
     public function definition(): array
     {
-        return [
-             'description' => fake()->sentence(),
+       return [
+                'description' => fake()->randomElement([
+                    'Fin de obra',
+                    'Obra suspendida',
+                    'Retraso en la obra',
+                ]),
         ];
     }
 }

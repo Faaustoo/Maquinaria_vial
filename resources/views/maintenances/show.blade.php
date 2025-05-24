@@ -16,7 +16,7 @@
                 </thead>
                 <tbody>
                     @foreach ($machine->maintenances as $maintenance)
-                        <tr class="border-b border-gray-700 hover:bg-gray-700">
+                        <tr class="border-b border-gray-700 hover:bg-gray-700 transition">
                             <td class="px-4 py-2">{{ $maintenance->date }}</td>
                             <td class="px-4 py-2">{{ $maintenance->kilometers }} km</td>
                             <td class="px-4 py-2">{{ $maintenance->description }}</td>
@@ -28,8 +28,8 @@
         @endif
 
         <div class="mt-4">
-            <a href="{{ route('maintenances.index') }}" class="inline-block px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                ← Volver al listado
+            <a href="{{ route('maintenances.index') }}" class="inline-block mb-6 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">
+                ← Volver 
             </a>
         </div>
     </div>

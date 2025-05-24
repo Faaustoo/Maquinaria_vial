@@ -9,11 +9,9 @@ use Illuminate\Support\Facades\Route;
 
 //vista principal
 Route::get('/', function () {return redirect()->route('login');});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
-
 // maquinas
 Route::middleware('auth')->group(function () {
     Route::get('/machines/search', [MachineController::class, 'search'])->name('machines.search');
@@ -24,8 +22,6 @@ Route::middleware('auth')->group(function () {
     Route::put('/machines/{id}', [MachineController::class, 'update'])->name('machines.update');
     Route::delete('/machines/{id}', [MachineController::class, 'destroy'])->name('machines.destroy');
 });
-
-
 // mantenimientos
 Route::middleware(['auth'])->group(function () {
     Route::get('/maintenances', [MaintenanceController::class, 'index'])->name('maintenances.index');
@@ -37,7 +33,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/maintenances/{machine_id}', [MaintenanceController::class, 'show'])->name('maintenances.show');
 
 });
-
 //obras
 Route::middleware(['auth'])->group(function () {
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
@@ -50,12 +45,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/projects/{project}/finish', [ProjectController::class, 'finish'])->name('projects.finish');
     Route::get('/projects/finished/{project}/machines', [ProjectController::class, 'showFinishedMachines'])
     ->name('showFinishedMachines');
-
-
-
-
 });
-
 // asignaciones
 Route::middleware(['auth'])->group(function () {
     Route::get('/assignments', [AssignmentController::class, 'index'])->name('assignments.index');
@@ -64,6 +54,11 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/assignments/{id}', [AssignmentController::class, 'update'])->name('assignments.update');
     Route::delete('/assignments/{id}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
     Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
+    Route::get('assignments/{id}/finish', [AssignmentController::class, 'finishForm'])->name('assignments.finishForm');
+Route::post('assignments/{id}/finish', [AssignmentController::class, 'finish'])->name('assignments.finish');
+Route::get('/assignments/finished', [AssignmentController::class, 'viewFinished'])->name('assignments.viewFinished');
+
+
 });
 
 

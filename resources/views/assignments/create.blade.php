@@ -1,47 +1,34 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto p-4">
         <a href="{{ route('assignments.index') }}"
-           class="inline-block mb-6 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">
+           class="inline-block mb-6 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition">
             ← Volver
         </a>
 
-        <form action="{{ route('assignments.store') }}" method="POST">
+        <form action="{{ route('assignments.store') }}" method="POST" class="bg-white dark:bg-gray-800 p-6 rounded shadow">
             @csrf
 
             <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-200">Fecha de inicio</label>
+                <label for="start_date" class="block text-gray-700 dark:text-gray-200 mb-1">Fecha de inicio</label>
                 <input 
                     type="date" 
                     name="start_date" 
-                    class="w-full border rounded p-2" 
+                    id="start_date"
+                    class="w-full border border-gray-300 dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value="{{ old('start_date') }}"
+                    required
                 >
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-200">Fecha de finalización</label>
-                <input 
-                    type="date" 
-                    name="end_date" 
-                    class="w-full border rounded p-2" 
-                    value="{{ old('end_date') }}"
+                <label for="machine_id" class="block text-gray-700 dark:text-gray-200 mb-1">Máquina</label>
+                <select 
+                    name="machine_id" 
+                    id="machine_id"
+                    class="w-full border border-gray-300 dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
                 >
-            </div>
-
-            <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-200">Kilómetros</label>
-                <input 
-                    type="number" 
-                    name="kilometers" 
-                    class="w-full border rounded p-2" 
-                    value="{{ old('kilometers') }}"
-                >
-            </div>
-
-            <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-200">Máquina</label>
-                <select name="machine_id" class="w-full border p-2">
-                    <option value="">-- Seleccionar --</option>
+                    <option value="" disabled selected>-- Seleccionar --</option>
                     @foreach ($machines as $machine)
                         <option value="{{ $machine->id }}" {{ old('machine_id') == $machine->id ? 'selected' : '' }}>
                             {{ $machine->serial_number }}
@@ -51,9 +38,14 @@
             </div>
 
             <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-200">Obra</label>
-                <select name="project_id" class="w-full border p-2">
-                    <option value="">-- Seleccionar --</option>
+                <label for="project_id" class="block text-gray-700 dark:text-gray-200 mb-1">Obra</label>
+                <select 
+                    name="project_id" 
+                    id="project_id"
+                    class="w-full border border-gray-300 dark:border-gray-600 rounded p-2 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    required
+                >
+                    <option value="" disabled selected>-- Seleccionar --</option>
                     @foreach ($projects as $project)
                         <option value="{{ $project->id }}" {{ old('project_id') == $project->id ? 'selected' : '' }}>
                             {{ $project->name }}
@@ -62,24 +54,15 @@
                 </select>
             </div>
 
-            <div class="mb-4">
-                <label class="block text-gray-700 dark:text-gray-200">Motivo de finalización</label>
-                <select name="reason_id" class="w-full border p-2">
-                    <option value="">-- Seleccionar --</option>
-                    @foreach ($endReasons as $reason)
-                        <option value="{{ $reason->id }}" {{ old('reason_id') == $reason->id ? 'selected' : '' }}>
-                            {{ $reason->description }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <button type="submit" class="w-full bg-blue-500 text-white px-4 py-2 rounded border border-black hover:bg-blue-600">
+            <button 
+                type="submit" 
+                class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 transition"
+            >
                 Guardar asignación
             </button>
 
             @if ($errors->any())
-                <div class="bg-red-100 text-red-700 p-4 rounded mt-4">
+                <div class="bg-red-100 text-red-700 p-4 mt-4 rounded">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>- {{ $error }}</li>

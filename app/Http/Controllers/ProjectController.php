@@ -83,53 +83,37 @@ class ProjectController extends Controller
 
    public function showFinalizeForm(Project $project)
 {
-    // Traer máquinas asignadas a esta obra (project)
-    $assignments = Assignment::with('machine')
-        ->where('project_id', $project->id)
-        ->get();
-
     $endReasons = EndReason::all();
 
-    return view('projects.finalizeForm', compact('project', 'assignments', 'endReasons'));
+    return view('projects.finalizeForm', compact('project', 'endReasons'));
 }
+
 
 public function finish(Request $request, Project $project)
 {
-    // Validación de los datos del formulario
+    // Verificar que la obra no tenga asignaciones activas
+    $hasActiveAssignments = Assignment::where('project_id', $project->id)
+        ->whereNull('end_date')
+        ->exists();
+
+    if ($hasActiveAssignments) {
+        return redirect()->back()->withErrors('No se puede finalizar la obra porque tiene asignaciones activas.');
+    }
+
+    // Validar fecha y motivo
     $validated = $request->validate([
-        'end_date' => 'required|date',
+        'end_date' => 'required|date|after_or_equal:' . $project->start_date,
         'reason_id' => 'required|exists:end_reasons,id',
-        'kilometers' => 'required|array',
-        'kilometers.*' => 'required|numeric|min:0',
     ]);
 
-            $project->end_date = $validated['end_date'];
-            $project->reason_id = $validated['reason_id'];
-            $project->save();
-
-    // 2. Actualizar los kilómetros de las máquinas y guardar los kilómetros en la asignación
-            foreach ($validated['kilometers'] as $machineId => $km) {
-                $machine = Machine::find($machineId);
-                if ($machine) {
-                    // Sumar kilómetros a la máquina
-                    $machine->kilometers += $km;
-                    $machine->save();
-
-                    // Guardar kilómetros en la asignación correspondiente
-                    $assignment = Assignment::where('project_id', $project->id)
-                                            ->where('machine_id', $machineId)
-                                            ->latest('created_at')
-                                            ->first();
-
-                    if ($assignment) {
-                        $assignment->kilometers = $km;
-                        $assignment->save();
-                    }
-        }
-    }
+    // Guardar datos de finalización en el proyecto
+    $project->end_date = $validated['end_date'];
+    $project->reason_id = $validated['reason_id'];
+    $project->save();
 
     return redirect()->route('projects.index')->with('success', 'Obra finalizada correctamente.');
 }
+
 
 
 public function showFinishedMachines(Project $project)

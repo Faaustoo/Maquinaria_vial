@@ -1,58 +1,65 @@
 <x-app-layout>
-    <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8">
-        <div class="mb-4">
+    <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8 text-white">
+        <!-- Acciones superiores -->
+        <div class="mb-4 flex justify-between items-center">
             <a href="{{ route('assignments.create') }}" 
-               class="inline-block px-4 py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700">
-                + Agregar 
+               class="inline-block px-4 py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700 transition">
+                + Agregar
+            </a>
+
+            <a href="{{ route('assignments.viewFinished') }}"
+               class="inline-block px-4 py-2 bg-gray-600 text-white font-semibold rounded hover:bg-gray-700 transition">
+                Ver Asignaciones Finalizadas
             </a>
         </div>
 
+        <!-- Mensaje de éxito -->
         @if (session('success'))
-            <div id="success-message" class="bg-green-500 text-white p-4 rounded mb-4">
+            <div id="success-message" class="bg-green-700 text-white p-4 rounded mb-4 shadow">
                 {{ session('success') }}
             </div>
         @endif
 
-        <div class="bg-yellow dark:bg-gray-800 p-6 rounded shadow">
-            <h3 class="text-lg font-semibold text-center text-white">Maquinas en obras</h3>
+        <!-- Tabla de asignaciones -->
+        <div class="bg-gray-800 p-6 rounded shadow">
+            <h3 class="text-lg font-semibold text-center text-white mb-4">Máquinas en obras</h3>
 
-            <table class="min-w-full mt-4 table-auto">
+            <table class="min-w-full table-auto border border-gray-700 rounded overflow-hidden">
                 <thead>
-                    <tr class="bg-gray-100 dark:bg-gray-700">
-                        <th class="py-2 px-4 border-b text-left text-white">Fecha inicio</th>
-                        <th class="py-2 px-4 border-b text-left text-white">Fecha de fin</th>
-                        <th class="py-2 px-4 border-b text-left text-white">Kilometros</th>
-                        <th class="py-2 px-4 border-b text-left text-white">Máquina</th>
-                        <th class="py-2 px-4 border-b text-left text-white">Obra</th>
-                        <th class="py-2 px-4 border-b text-left text-white">Motivo</th>
-                        <th class="py-2 px-4 border-b text-left text-white">Acciones</th>
+                    <tr class="bg-gray-700">
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Fecha inicio</th>
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Máquina</th>
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Obra</th>
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach ($assignments as $assignment)
-                    <tr class="text-white hover:bg-white hover:text-black">
-                        <td class="py-2 px-4 border-b">{{ $assignment->start_date ?? 'Sin fecha' }}</td>
-                        <td class="py-2 px-4 border-b">{{ $assignment->end_date ?? 'Sin fecha' }}</td>
-                        <td class="py-2 px-4 border-b">{{ $assignment->kilometers ?? 'Sin datos' }}</td>
-                        <td class="py-2 px-4 border-b">{{ $assignment->machine?->serial_number ?? 'Sin máquina asignada' }}</td>
-                        <td class="py-2 px-4 border-b">{{ $assignment->projects?->name ?? 'Sin obra asignada' }}</td>
-                        <td class="py-2 px-4 border-b">{{ $assignment->endReason?->description ?? 'Sin motivo' }}</td>
-                        <td class="py-2 px-4 border-b">
-                            <a href="{{ route('assignments.edit', $assignment->id) }}" class="text-blue-800 hover:text-blue-500 mr-4">Editar</a>
-                            <form action="{{ route('assignments.destroy', $assignment->id) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="button" class="text-red-600 hover:text-red-900"
-                                        onclick="abrirModal('¿Seguro querés eliminar este mantenimiento?', this.closest('form'))">
-                                    Eliminar
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
+                    @forelse ($assignments as $assignment)
+                        <tr class="hover:bg-gray-200 hover:text-black transition">
+                            <td class="py-2 px-4 border-b border-gray-700">{{ $assignment->start_date }}</td>
+                            <td class="py-2 px-4 border-b border-gray-700">{{ $assignment->machine->serial_number }}</td>
+                            <td class="py-2 px-4 border-b border-gray-700">{{ $assignment->project->name }}</td>
+                            <td class="py-2 px-4 border-b border-gray-700 whitespace-nowrap">
+                                <a href="{{ route('assignments.edit', $assignment->id) }}" 
+                                   class="text-blue-400 hover:text-blue-600 font-semibold mr-4 transition">
+                                    Editar
+                                </a>
+
+                                <a href="{{ route('assignments.finishForm', $assignment->id) }}" 
+                                   class="text-red-400 hover:text-red-600 font-semibold transition">
+                                    Finalizar
+                                </a>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4" class="py-4 px-4 text-center text-white">No hay asignaciones registradas.</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
 
+            <!-- Paginación -->
             <div class="mt-4">
                 {{ $assignments->links() }}
             </div>
