@@ -28,8 +28,8 @@
                         @foreach ($projects as $project)
                             <tr class="hover:bg-gray-200 hover:text-black transition">
                                 <td class="py-2 px-4 border-b border-gray-700">{{ $project->name }}</td>
-                                <td class="py-2 px-4 border-b border-gray-700">{{ $project->start_date }}</td>
-                                <td class="py-2 px-4 border-b border-gray-700">{{ $project->end_date }}</td>
+                                <td class="py-2 px-4 border-b border-gray-700">{{\Carbon\Carbon::parse($project->start_date)->format('d/m/Y')  }}</td>
+                                <td class="py-2 px-4 border-b border-gray-700">{{ \Carbon\Carbon::parse($project->END_date)->format('d/m/Y') }}</td>
                                 <td class="py-2 px-4 border-b border-gray-700">{{ $project->endReason->description }}</td> 
                                 <td class="py-2 px-4 border-b border-gray-700">{{ $project->province->name }}</td>
                                 <td class="py-2 px-4 border-b border-gray-700 whitespace-nowrap">
@@ -43,9 +43,7 @@
                     </tbody>
                 </table>
 
-                <div class="mt-4">
-                    {{ $projects->links() }}
-                </div>
+                
             @endif
         </div>
     </div>

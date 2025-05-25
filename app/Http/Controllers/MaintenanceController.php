@@ -9,13 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class MaintenanceController extends Controller{
 
-   public function index()
+ public function index()
 {
-    $maintenances = Maintenance::with(['machine', 'user'])->paginate(10);
-    $machines = Machine::all();  // Trae todas las máquinas
+    $maintenances = Maintenance::with(['machine', 'user'])
+        ->orderBy('date', 'desc') 
+        ->paginate(10);
+
+    $machines = Machine::all();
 
     return view('maintenances.index', compact('maintenances', 'machines'));
 }
+
 
     public function create()
     {
@@ -71,11 +75,13 @@ class MaintenanceController extends Controller{
         return redirect()->route('maintenances.index')->with('success', 'Mantenimiento actualizado.');
     }
 
-    public function show($machine_id)
+ public function show($machine_id)
 {
-    $machine = Machine::with('maintenances')->findOrFail($machine_id);
+    $machine = Machine::with(['maintenances' => function ($query) {
+        $query->orderBy('date', 'desc');
+    }])->findOrFail($machine_id);
+
     return view('maintenances.show', compact('machine'));
 }
-
 
 }

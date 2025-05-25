@@ -12,10 +12,15 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
     public function index()
-    {
-        $projects = Project::with('province')->whereNull('end_date')->paginate(10);
-        return view('projects.index', compact('projects'));
-    }
+{
+    $projects = Project::with('province')
+        ->whereNull('end_date')
+        ->orderBy('start_date', 'desc')
+        ->paginate(10);
+
+    return view('projects.index', compact('projects'));
+}
+
 
     public function create()
     {
@@ -71,15 +76,16 @@ class ProjectController extends Controller
 
   
 
-    public function viewFinished()
+public function viewFinished()
+{
+    $projects = Project::with('province')
+        ->whereNotNull('end_date')
+        ->orderBy('id', 'desc')   
+        ->get();
 
-    {
-        $projects = Project::with('province')
-            ->whereNotNull('end_date')  
-            ->paginate(10);
+    return view('projects.finished', compact('projects'));
+}
 
-        return view('projects.finished', compact('projects'));
-    }
 
    public function showFinalizeForm(Project $project)
 {

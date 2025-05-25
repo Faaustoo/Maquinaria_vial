@@ -10,7 +10,7 @@ class MachineController extends Controller
 {
     public function index()
     {
-        $machines = Machine::with('MachineType')->paginate(10);
+        $machines = Machine::with('machineType')->paginate(10);
         return view('machines.index', compact('machines'));
     }
 
@@ -23,7 +23,7 @@ class MachineController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'serial_number' => 'required|regex:/^EXC-\d{4}$/',
+            'serial_number' => 'required|regex:/^ABC-\d{4}$/',
             'model' => 'required|regex:/^Modelo-\d{3}$/',
             'type_id' => 'required|exists:machine_types,id',
         ]);
@@ -48,7 +48,7 @@ class MachineController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'serial_number' => 'required|regex:/^EXC-\d{4}$/',
+            'serial_number' => 'required|regex:/^ABC-\d{4}$/',
             'model' => 'required|regex:/^Modelo-\d{3}$/',
             'type_id' => 'required|exists:machine_types,id',
         ]);

@@ -16,7 +16,7 @@
                     name="serial_number" 
                     id="serial_number"
                     class="w-full bg-gray-900 text-white border border-gray-600 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500" 
-                    placeholder="EXC-####" 
+                    placeholder="ABC-####" 
                     value="{{ old('serial_number') }}"
                     required
                 >

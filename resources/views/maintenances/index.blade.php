@@ -52,7 +52,7 @@
                 <tbody>
                     @foreach ($maintenances as $maintenance)
                         <tr class="hover:bg-gray-200 hover:text-black transition">
-                            <td class="py-2 px-4 border-b border-gray-700">{{ $maintenance->date }}</td>
+                            <td class="py-2 px-4 border-b border-gray-700">{{ \Carbon\Carbon::parse($maintenance->date)->format('d/m/Y')  }}</td>
                             <td class="py-2 px-4 border-b border-gray-700">{{ $maintenance->kilometers }} km</td>
                             <td class="py-2 px-4 border-b border-gray-700">{{ $maintenance->description }}</td>
                             <td class="py-2 px-4 border-b border-gray-700">{{ $maintenance->machine->serial_number }}</td>

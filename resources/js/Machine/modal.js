@@ -1,18 +1,12 @@
-let formularioAEliminar = null;
+function abrirModal(id) {
+  document.getElementById('modalEliminar').classList.remove('hidden');
+  const form = document.getElementById('formEliminar');
+  form.action = "/machines/" + id;
+}
 
-window.abrirModal = function(mensaje, formulario) {
-  formularioAEliminar = formulario;
-  document.getElementById('modal-mensaje').textContent = mensaje;
-  document.getElementById('modal-confirmacion').classList.remove('hidden');
-};
+function cerrarModal() {
+  document.getElementById('modalEliminar').classList.add('hidden');
+}
 
-window.cerrarModal = function() {
-  formularioAEliminar = null;
-  document.getElementById('modal-confirmacion').classList.add('hidden');
-};
-
-document.getElementById('modal-btn-confirmar').addEventListener('click', function() {
-  if (formularioAEliminar) {
-    formularioAEliminar.submit();
-  }
-});
+window.abrirModal = abrirModal;
+window.cerrarModal = cerrarModal;

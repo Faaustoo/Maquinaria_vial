@@ -19,7 +19,7 @@ class MachineFactory extends Factory
     public function definition(): array
     {
         return [
-            'serial_number' => 'EXC-' . rand(1000, 9999), 
+            'serial_number' => 'ABC-' . rand(1000, 9999), 
             'model' => 'Modelo-' . $this->faker->numberBetween(100, 999),
             'kilometers' => fake()->numberBetween(100, 10000),
             'type_id' => MachineType::inRandomOrder()->first()->id,  

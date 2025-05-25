@@ -10,14 +10,16 @@ use Illuminate\Support\Facades\Auth;
 
 class AssignmentController extends Controller
 {
-   public function index()
-    {
-        $assignments = Assignment::with(['machine', 'project'])
-            ->whereNull('end_date')  
-            ->paginate(10);
+ public function index()
+{
+    $assignments = Assignment::with(['machine', 'project'])
+        ->whereNull('end_date')
+        ->orderBy('id', 'desc')   // ordena por ID descendente
+        ->paginate(10);
 
-        return view('assignments.index', compact('assignments'));
-    }
+    return view('assignments.index', compact('assignments'));
+}
+
 
 
     public function create()
@@ -118,13 +120,13 @@ public function finish(Request $request, $id)
 
 public function viewFinished()
 {
-    // Solo asignaciones que tienen fecha de finalización
     $assignments = Assignment::whereNotNull('end_date')
-                              ->with(['machine', 'project'])
-                              ->orderByDesc('end_date')
-                              ->paginate(10);
+        ->with(['machine', 'project'])
+        ->orderBy('id', 'desc')  
+        ->paginate(10);
 
     return view('assignments.finished', compact('assignments'));
 }
+
 
 }

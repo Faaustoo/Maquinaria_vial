@@ -17,7 +17,7 @@
                 <tbody>
                     @foreach ($machine->maintenances as $maintenance)
                         <tr class="border-b border-gray-700 hover:bg-gray-700 transition">
-                            <td class="px-4 py-2">{{ $maintenance->date }}</td>
+                            <td class="px-4 py-2">{{ \Carbon\Carbon::parse($maintenance->date)->format('d/m/Y')}}</td>
                             <td class="px-4 py-2">{{ $maintenance->kilometers }} km</td>
                             <td class="px-4 py-2">{{ $maintenance->description }}</td>
                             <td class="px-4 py-2">{{ $maintenance->user->name ?? 'N/A' }}</td>

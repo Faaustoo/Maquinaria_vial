@@ -27,18 +27,18 @@
             <table class="min-w-full table-auto border border-gray-700 rounded overflow-hidden">
                 <thead>
                     <tr class="bg-gray-700">
-                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Fecha inicio</th>
-                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Máquina</th>
                         <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Obra</th>
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Máquina</th>
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Fecha de inicio</th>
                         <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($assignments as $assignment)
                         <tr class="hover:bg-gray-200 hover:text-black transition">
-                            <td class="py-2 px-4 border-b border-gray-700">{{ $assignment->start_date }}</td>
-                            <td class="py-2 px-4 border-b border-gray-700">{{ $assignment->machine->serial_number }}</td>
                             <td class="py-2 px-4 border-b border-gray-700">{{ $assignment->project->name }}</td>
+                            <td class="py-2 px-4 border-b border-gray-700">{{ $assignment->machine->serial_number }}</td>
+                            <td class="py-2 px-4 border-b border-gray-700">{{ \Carbon\Carbon::parse($assignment->start_date)->format('d/m/Y') }}</td>
                             <td class="py-2 px-4 border-b border-gray-700 whitespace-nowrap">
                                 <a href="{{ route('assignments.edit', $assignment->id) }}" 
                                    class="text-blue-400 hover:text-blue-600 font-semibold mr-4 transition">

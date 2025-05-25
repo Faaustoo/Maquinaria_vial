@@ -38,15 +38,10 @@
                                    class="text-blue-400 hover:text-blue-600 font-semibold mr-4 transition">
                                     Editar
                                 </a>
-                                <form action="{{ route('machines.destroy', $machine->id) }}" method="POST" class="inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" 
-                                            class="text-red-500 hover:text-red-700 font-semibold transition"
-                                            onclick="abrirModal('¿Seguro querés eliminar esta máquina?', this.closest('form'))">
-                                        Eliminar
-                                    </button>
-                                </form>
+                            <button type="button" class="text-red-500 hover:text-red-700 font-semibold transition"
+                                    onclick="abrirModal({{ $machine->id }})">Eliminar
+                            </button>
+
                             </td>
                         </tr>
                     @endforeach
@@ -59,4 +54,21 @@
             </div>
         </div>
     </div>
+
+
+            <div id="modalEliminar" class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden">
+            <div class="bg-gray-900 text-white p-6 rounded shadow-lg max-w-sm w-full">
+                <h2 class="text-lg font-bold mb-4">Confirmar eliminación</h2>
+                <p class="mb-6">¿Estás seguro que querés eliminar esta máquina?</p>
+                <div class="flex justify-end gap-4">
+                <button onclick="cerrarModal()" class="px-4 py-2 bg-gray-700 rounded hover:bg-gray-600">Cancelar</button>
+                <form id="formEliminar" method="POST" action="">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="px-4 py-2 bg-red-600 rounded hover:bg-red-700">Eliminar</button>
+                </form>
+                </div>
+            </div>
+            </div>
+
 </x-app-layout>
