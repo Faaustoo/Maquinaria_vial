@@ -16,6 +16,7 @@ return new class extends Migration
             $table->date('date');
             $table->integer('kilometers');
             $table->text('description');
+            $table->enum('type', ['maintenance', 'reminder']);
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('machine_id')->constrained()->onDelete('cascade');
             $table->timestamps();

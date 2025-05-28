@@ -2,7 +2,7 @@
     <div class="max-w-4xl mx-auto p-4">
         <a href="{{ route('projects.viewFinished') }}"
            class="inline-block mb-4 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 dark:bg-gray-700 dark:hover:bg-gray-800">
-            ← Volver a Obras Finalizadas
+            <i class="fas fa-arrow-circle-left mr-1"></i> Volver
         </a>
 
         <h2 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">
@@ -17,7 +17,7 @@
                     <tr class="bg-gray-200 dark:bg-gray-700">
                         <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-gray-900 dark:text-white">Número de Serie</th>
                         <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-gray-900 dark:text-white">Tipo de máquina</th>
-                        <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-gray-900 dark:text-white">Kilómetros finales</th>
+                        <th class="border border-gray-300 dark:border-gray-600 px-4 py-2 text-gray-900 dark:text-white">Kilómetros recorridos</th>
                     </tr>
                 </thead>
                 <tbody>

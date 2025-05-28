@@ -23,12 +23,12 @@ class Project extends Model
         return $this->belongsTo(Province::class);
     }
 
-     public function assignments()
+    public function assignments()
     {
         return $this->hasMany(Assignment::class);
     }
 
-     public function endReason()
+    public function endReason()
     {
         return $this->belongsTo(EndReason::class, 'reason_id');
     }

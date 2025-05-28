@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Province extends Model
 {
-     use HasFactory;
-     
+    use HasFactory;
+
     protected $fillable = [
         'name',
     ];
 
-     public function projects()
+    public function projects()
     {
         return $this->hasMany(Project::class);
     }

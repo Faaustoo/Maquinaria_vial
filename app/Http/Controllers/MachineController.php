@@ -22,61 +22,70 @@ class MachineController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'serial_number' => 'required|regex:/^ABC-\d{4}$/',
-            'model' => 'required|regex:/^Modelo-\d{3}$/',
-            'type_id' => 'required|exists:machine_types,id',
-        ]);
+        $request->validate(['serial_number' => ['required', 'regex:/^ABC-\d{4}$/', 'unique:machines,serial_number'],'model' => 'required|regex:/^Modelo-\d{3}$/','type_id' => 'required|exists:machine_types,id', 'kilometers' => 'required|integer|min:0',]);
 
         $machine = new Machine();
         $machine->serial_number = $request->serial_number;
         $machine->model = $request->model;
+        $machine->kilometers = $request->kilometers;
         $machine->type_id = $request->type_id;
         $machine->save();
-
-        return redirect()->route('machines.index')->with('success', 'Máquina guardada con éxito.');
+        return redirect()->route('machines.index')->with('success', 'Maquina guardada con exito.');
     }
 
     public function edit($id)
     {
         $tipos = MachineType::all();
         $machine = Machine::findOrFail($id);
-
         return view('machines.edit', compact('machine', 'tipos'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'serial_number' => 'required|regex:/^ABC-\d{4}$/',
-            'model' => 'required|regex:/^Modelo-\d{3}$/',
-            'type_id' => 'required|exists:machine_types,id',
-        ]);
+        $request->validate(['serial_number' => 'required|regex:/^ABC-\d{4}$/','model' => 'required|regex:/^Modelo-\d{3}$/','type_id' => 'required|exists:machine_types,id',]);
 
         $machine = Machine::findOrFail($id);
         $machine->serial_number = $request->serial_number;
         $machine->model = $request->model;
         $machine->type_id = $request->type_id;
         $machine->save();
-
-        return redirect()->route('machines.index')->with('success', 'Máquina actualizada con éxito.');
+        return redirect()->route('machines.index')->with('success', 'Maquina actualizada con exito');
     }
 
     public function destroy($id)
     {
         $machine = Machine::findOrFail($id);
         $machine->delete();
-
-        return redirect()->route('machines.index')->with('success', 'Máquina eliminada con éxito.');
+        return redirect()->route('machines.index')->with('success', 'Maquina eliminada con exito.');
     }
 
-    public function search(Request $request)
-{
-    $query = $request->input('q');
+    public function show($id)
+        {
+            $machine = Machine::with(['maintenances'])->findOrFail($id);
+            $ActiveAssignment = $machine->assignments()
+                ->whereNull('end_date')
+                ->first();
+            $lastMaintenance = $machine->maintenances()
+                ->where('type', 'maintenance')
+                ->orderBy('date', 'desc')
+                ->first();
 
-    $machines = Machine::where('serial_number', 'LIKE', "%{$query}%")->with('MachineType')->get();
+                if ($lastMaintenance) {
+                    $maintenanceKm = $lastMaintenance->kilometers;
+                    } else {
+                        $maintenanceKm = 0;
+                    }
+                $diferencia = $machine->kilometers - $maintenanceKm;
 
-    return response()->json($machines);
-}
+
+                    if ($diferencia > 5000) { 
+                        $estado = 'Necesita mantenimiento';
+                    } else {
+                        $estado = 'Optimo';
+                    }
+            return view('machines.show', compact('machine', 'ActiveAssignment', 'estado'));
+        }
+
+
 
 }

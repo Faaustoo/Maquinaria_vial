@@ -14,6 +14,6 @@ class MachineTypeSeeder extends Seeder
      */
     public function run(): void
     {
-         MachineType::factory()->count(5)->create();
+         MachineType::factory(5)->create();
     }
 }

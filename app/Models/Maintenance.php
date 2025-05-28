@@ -13,6 +13,7 @@ class Maintenance extends Model
         'date',
         'kilometers',
         'description',
+        'type',
         'user_id',
         'machine_id'
     ];

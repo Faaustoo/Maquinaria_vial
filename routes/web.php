@@ -12,6 +12,7 @@ Route::get('/', function () {return redirect()->route('login');});
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
 // maquinas
 Route::middleware('auth')->group(function () {
     Route::get('/machines/search', [MachineController::class, 'search'])->name('machines.search');
@@ -21,18 +22,23 @@ Route::middleware('auth')->group(function () {
     Route::get('/machines/{id}/edit', [MachineController::class, 'edit'])->name('machines.edit');
     Route::put('/machines/{id}', [MachineController::class, 'update'])->name('machines.update');
     Route::delete('/machines/{id}', [MachineController::class, 'destroy'])->name('machines.destroy');
+    Route::get('/machines/{id}', [MachineController::class, 'show'])->name('machines.show');
+
 });
-// mantenimientos
+
+//mantenimiento
 Route::middleware(['auth'])->group(function () {
+    Route::get('/maintenances/reminders', [MaintenanceController::class, 'reminders'])->name('maintenances.reminders');
     Route::get('/maintenances', [MaintenanceController::class, 'index'])->name('maintenances.index');
     Route::get('/maintenances/create', [MaintenanceController::class, 'create'])->name('maintenances.create');
+    Route::get('/maintenances/machine', [MaintenanceController::class, 'show'])->name('maintenances.show');
     Route::get('/maintenances/{id}/edit', [MaintenanceController::class, 'edit'])->name('maintenances.edit');
     Route::put('/maintenances/{id}', [MaintenanceController::class, 'update'])->name('maintenances.update');
     Route::delete('/maintenances/{id}', [MaintenanceController::class, 'destroy'])->name('maintenances.destroy');
     Route::post('/maintenances', [MaintenanceController::class, 'store'])->name('maintenances.store');
-    Route::get('/maintenances/{machine_id}', [MaintenanceController::class, 'show'])->name('maintenances.show');
-
 });
+
+
 //obras
 Route::middleware(['auth'])->group(function () {
     Route::get('/projects', [ProjectController::class, 'index'])->name('projects.index');
@@ -46,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/projects/finished/{project}/machines', [ProjectController::class, 'showFinishedMachines'])
     ->name('showFinishedMachines');
 });
+
 // asignaciones
 Route::middleware(['auth'])->group(function () {
     Route::get('/assignments', [AssignmentController::class, 'index'])->name('assignments.index');
@@ -55,10 +62,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/assignments/{id}', [AssignmentController::class, 'destroy'])->name('assignments.destroy');
     Route::post('/assignments', [AssignmentController::class, 'store'])->name('assignments.store');
     Route::get('assignments/{id}/finish', [AssignmentController::class, 'finishForm'])->name('assignments.finishForm');
-Route::post('assignments/{id}/finish', [AssignmentController::class, 'finish'])->name('assignments.finish');
-Route::get('/assignments/finished', [AssignmentController::class, 'viewFinished'])->name('assignments.viewFinished');
-
-
+    Route::post('assignments/{id}/finish', [AssignmentController::class, 'finish'])->name('assignments.finish');
+    Route::get('/assignments/finished', [AssignmentController::class, 'viewFinished'])->name('assignments.viewFinished');
 });
 
 

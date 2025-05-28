@@ -12,15 +12,13 @@ use Illuminate\Http\Request;
 class ProjectController extends Controller
 {
     public function index()
-{
-    $projects = Project::with('province')
-        ->whereNull('end_date')
-        ->orderBy('start_date', 'desc')
-        ->paginate(10);
-
-    return view('projects.index', compact('projects'));
-}
-
+    {
+        $projects = Project::with('province')
+            ->whereNull('end_date')
+            ->orderBy('start_date', 'desc')
+            ->paginate(10);
+        return view('projects.index', compact('projects'));
+    }
 
     public function create()
     {
@@ -30,12 +28,7 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date',
-            'province_id' => 'required|exists:provinces,id',
-        ]);
+        $request->validate(['name' => 'required|string','start_date' => 'required|date','end_date' => 'nullable|date','province_id' => 'required|exists:provinces,id',]);
 
         $project = new Project();
         $project->name = $request->name;
@@ -43,26 +36,19 @@ class ProjectController extends Controller
         $project->end_date = $request->end_date;
         $project->province_id = $request->province_id;
         $project->save();
-
-        return redirect()->route('projects.index')->with('success', 'Obra guardada con éxito.');
+        return redirect()->route('projects.index')->with('success', 'Obra guardada con exito.');
     }
 
-    public function edit(string $id)
+    public function edit($id)
     {
         $provinces = Province::all();
         $project = Project::findOrFail($id);
-
         return view('projects.edit', compact('provinces', 'project'));
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request,$id)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'start_date' => 'required|date',
-            'end_date' => 'nullable|date',
-            'province_id' => 'required|exists:provinces,id',
-        ]);
+        $request->validate(['name' => 'required|string','start_date' => 'required|date','end_date' => 'nullable|date','province_id' => 'required|exists:provinces,id',]);
 
         $project = Project::findOrFail($id);
         $project->name = $request->name;
@@ -70,66 +56,47 @@ class ProjectController extends Controller
         $project->end_date = $request->end_date;
         $project->province_id = $request->province_id;
         $project->save();
-
-        return redirect()->route('projects.index')->with('success', 'Obra actualizada.');
+        return redirect()->route('projects.index')->with('success', 'Obra actualizada con exito.');
     }
 
-  
-
-public function viewFinished()
-{
-    $projects = Project::with('province')
-        ->whereNotNull('end_date')
-        ->orderBy('id', 'desc')   
-        ->get();
-
-    return view('projects.finished', compact('projects'));
-}
-
-
-   public function showFinalizeForm(Project $project)
-{
-    $endReasons = EndReason::all();
-
-    return view('projects.finalizeForm', compact('project', 'endReasons'));
-}
-
-
-public function finish(Request $request, Project $project)
-{
-    // Verificar que la obra no tenga asignaciones activas
-    $hasActiveAssignments = Assignment::where('project_id', $project->id)
-        ->whereNull('end_date')
-        ->exists();
-
-    if ($hasActiveAssignments) {
-        return redirect()->back()->withErrors('No se puede finalizar la obra porque tiene asignaciones activas.');
+    public function viewFinished()
+    {
+        $projects = Project::with('province')
+            ->whereNotNull('end_date')
+            ->orderBy('id', 'desc')   
+            ->get();
+            return view('projects.finished', compact('projects'));
     }
 
-    // Validar fecha y motivo
-    $validated = $request->validate([
-        'end_date' => 'required|date|after_or_equal:' . $project->start_date,
-        'reason_id' => 'required|exists:end_reasons,id',
-    ]);
+   public function showFinalizeForm($id)
+    {
+        $project = Project::findOrFail($id);
+        $endReasons = EndReason::all();
+        return view('projects.finalizeForm', compact('project', 'endReasons'));
+    }
 
-    // Guardar datos de finalización en el proyecto
-    $project->end_date = $validated['end_date'];
-    $project->reason_id = $validated['reason_id'];
-    $project->save();
+public function finish(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+        $activeAssignments = Assignment::where('project_id', $project->id)
+            ->whereNull('end_date')
+            ->exists();
+                if ($activeAssignments) {
+                    return redirect()->back()->withErrors('Error la obra porque tiene asignaciones activas.');
+                }
 
-    return redirect()->route('projects.index')->with('success', 'Obra finalizada correctamente.');
-}
-
-
-
-public function showFinishedMachines(Project $project)
-{
-    // Cargar las máquinas asignadas a la obra (usando la relación assignments y machines)
-    $assignments = $project->assignments()->with('machine')->get();
-
-    return view('projects.machine', compact('project', 'assignments'));
-}
-
+        $validated = $request->validate(['end_date' => 'required|date','reason_id' => 'required|exists:end_reasons,id',]);
+        $project->end_date = $validated['end_date'];
+        $project->reason_id = $validated['reason_id'];
+        $project->save();
+        return redirect()->route('projects.index')->with('success', 'Obra finalizada con exito.');
+    }
 
 
+public function showFinishedMachines($id)
+    {
+        $project = Project::findOrFail($id);
+        $assignments = $project->assignments()->with('machine')->get();
+        return view('projects.machine', compact('project', 'assignments'));
+    }
 }

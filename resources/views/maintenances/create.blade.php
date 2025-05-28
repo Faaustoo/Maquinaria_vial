@@ -1,57 +1,64 @@
 <x-app-layout>
-    <div class="max-w-2xl mx-auto p-4">
-        <a href="{{ route('maintenances.index') }}"
-           class="inline-block mb-6 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">
-            ← Volver
-        </a>
+    <div class="max-w-xl mx-auto p-4 text-white">
 
-        <form action="{{ route('maintenances.store') }}" method="POST" class="bg-yellow dark:bg-gray-800 p-6 rounded shadow">
+        <form action="{{ route('maintenances.store') }}" method="POST" class="bg-gray-800 p-4 rounded shadow">
             @csrf
 
-            <div class="mb-4">
-                <label for="date" class="block text-white font-semibold mb-1">Fecha</label>
+            {{-- Botón para volver --}}
+            <div class="flex justify-end mb-3">
+                <a href="{{ route('maintenances.index') }}" class="px-3 py-1 bg-gray-600 rounded hover:bg-gray-700 transition">
+                    <i class="fas fa-times text-xl"></i>
+                </a>
+            </div>
+
+            {{-- Fecha --}}
+            <div class="mb-3">
+                <label for="date" class="block font-semibold mb-1">Fecha</label>
                 <input 
                     type="date" 
                     name="date" 
                     id="date"
-                    class="w-full bg-gray-900 text-white border border-gray-600 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value="{{ old('date') }}"
                     required
+                    class="w-full bg-gray-900 border border-gray-600 rounded p-2 focus:ring-blue-500"
                 >
             </div>
 
-            <div class="mb-4">
-                <label for="kilometers" class="block text-white font-semibold mb-1">Kilómetros</label>
+            {{-- Kilómetros --}}
+            <div class="mb-3">
+                <label for="kilometers" class="block font-semibold mb-1">Kilómetros</label>
                 <input 
                     type="number" 
                     name="kilometers" 
                     id="kilometers"
-                    class="w-full bg-gray-900 text-white border border-gray-600 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value="{{ old('kilometers') }}"
                     required
+                    class="w-full bg-gray-900 border border-gray-600 rounded p-2 focus:ring-blue-500"
                 >
             </div>
 
-            <div class="mb-4">
-                <label for="description" class="block text-white font-semibold mb-1">Descripción</label>
+            {{-- Descripción --}}
+            <div class="mb-3">
+                <label for="description" class="block font-semibold mb-1">Descripción</label>
                 <textarea 
                     name="description" 
-                    id="description"
-                    rows="3"
-                    class="w-full bg-gray-900 text-white border border-gray-600 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    id="description" 
+                    rows="2"
                     required
+                    class="w-full bg-gray-900 border border-gray-600 rounded p-2 focus:ring-blue-500"
                 >{{ old('description') }}</textarea>
             </div>
 
-            <div class="mb-4">
-                <label for="machine_id" class="block text-white font-semibold mb-1">Máquina</label>
+            {{-- Máquina --}}
+            <div class="mb-3">
+                <label for="machine_id" class="block font-semibold mb-1">Máquina</label>
                 <select 
                     name="machine_id" 
-                    id="machine_id"
-                    class="w-full bg-gray-900 text-white border border-gray-600 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    id="machine_id" 
                     required
+                    class="w-full bg-gray-900 border border-gray-600 rounded p-2 focus:ring-blue-500"
                 >
-                    <option value="" disabled {{ old('machine_id') ? '' : 'selected' }}>Seleccionar máquina</option>
+                    <option value="" disabled {{ old('machine_id') ? '' : 'selected' }}>Seleccionar</option>
                     @foreach ($machines as $machine)
                         <option value="{{ $machine->id }}" {{ old('machine_id') == $machine->id ? 'selected' : '' }}>
                             {{ $machine->serial_number }}
@@ -60,12 +67,11 @@
                 </select>
             </div>
 
-            <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
-                Guardar
-            </button>
+            <button type="submit" class="w-full bg-blue-600 text-white px-3 py-1.5 rounded hover:bg-blue-700 transition text-sm">Guardar cambios</button>
 
+            {{-- Errores --}}
             @if ($errors->any())
-                <div class="bg-red-100 text-red-700 p-4 mt-4 rounded">
+                <div class="bg-red-700 text-white p-3 mt-4 rounded text-sm">
                     <ul class="list-disc list-inside">
                         @foreach ($errors->all() as $error)
                             <li>- {{ $error }}</li>

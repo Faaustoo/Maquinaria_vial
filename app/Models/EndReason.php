@@ -14,7 +14,7 @@ class EndReason extends Model
         'description',
     ];
 
-     public function projects()
+    public function projects()
     {
         return $this->hasMany(Assignment::class);
     }

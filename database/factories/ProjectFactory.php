@@ -6,16 +6,10 @@ use App\Models\EndReason;
 use App\Models\Province;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Project>
- */
+
 class ProjectFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    
     public function definition(): array
     {
         return [
@@ -24,7 +18,6 @@ class ProjectFactory extends Factory
             'end_date' => fake()->dateTimeBetween('now', '+1 year')->format('Y-m-d'),
             'province_id' => Province::inRandomOrder()->first()->id,
             'reason_id'=>EndReason::inRandomOrder()->first()->id,
-
         ];
     }
 }

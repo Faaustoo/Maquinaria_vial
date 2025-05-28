@@ -2,9 +2,9 @@
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8 text-white">
         <div class="mb-4">
             <a href="{{ route('projects.index') }}"
-               class="inline-block px-4 py-2 bg-gray-600 text-white font-semibold rounded hover:bg-gray-700 transition">
-                ← Volver a Obras Activas
-            </a>
+           class="inline-block mb-6 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">
+             <i class="fas fa-arrow-circle-left mr-1"></i> Volver
+        </a>
         </div>
 
         <h3 class="text-lg font-semibold text-center mb-4 text-white">Obras Finalizadas</h3>
@@ -21,7 +21,7 @@
                             <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Fecha de fin</th>
                             <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Motivo</th>
                             <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Provincia</th>
-                            <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Acciones</th>
+                            <th class="py-2 px-4 border-b border-gray-600  text-center text-white ">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -32,10 +32,10 @@
                                 <td class="py-2 px-4 border-b border-gray-700">{{ \Carbon\Carbon::parse($project->END_date)->format('d/m/Y') }}</td>
                                 <td class="py-2 px-4 border-b border-gray-700">{{ $project->endReason->description }}</td> 
                                 <td class="py-2 px-4 border-b border-gray-700">{{ $project->province->name }}</td>
-                                <td class="py-2 px-4 border-b border-gray-700 whitespace-nowrap">
+                                <td class="py-2 px-4 border-b border-gray-700 whitespace-nowrap text-center">
                                     <a href="{{ route('showFinishedMachines', $project->id) }}" 
-                                       class="text-blue-400 hover:text-blue-600 font-semibold transition">
-                                        Ver Máquinas
+                                       class="text-yellow-400 hover:text-yellow-600 font-semibold transition">
+                                        <i class="fas fa-eye"></i>
                                     </a>
                                 </td>
                             </tr>

@@ -9,16 +9,16 @@ use Illuminate\Support\Facades\Auth;
 
 class MaintenanceController extends Controller{
 
- public function index()
-{
-    $maintenances = Maintenance::with(['machine', 'user'])
-        ->orderBy('date', 'desc') 
-        ->paginate(10);
+public function index()
+    {
+        $machines = Machine::all();
+        $maintenances = Maintenance::with(['machine', 'user'])
+            ->where('type', 'maintenance')  
+            ->orderBy('date', 'desc')
+            ->paginate(10);
 
-    $machines = Machine::all();
-
-    return view('maintenances.index', compact('maintenances', 'machines'));
-}
+        return view('maintenances.index', compact('maintenances', 'machines'));
+    }
 
 
     public function create()
@@ -29,12 +29,7 @@ class MaintenanceController extends Controller{
 
     public function store(Request $request)
     {
-        $request->validate([
-            'date' => 'required|date',
-            'kilometers' => 'required|integer',
-            'description' => 'required|string',
-            'machine_id' => 'required|exists:machines,id',
-        ]);
+        $request->validate(['date' => 'required|date','kilometers' => 'required|integer','description' => 'required|string','machine_id' => 'required|exists:machines,id',]);
 
         $maintenance = new Maintenance();
         $maintenance->date = $request->date;
@@ -43,7 +38,6 @@ class MaintenanceController extends Controller{
         $maintenance->machine_id = $request->machine_id;
         $maintenance->user_id = Auth::id(); 
         $maintenance->save();
-
         return redirect()->route('maintenances.index')->with('success', 'Mantenimiento registrado.');
     }
 
@@ -52,17 +46,11 @@ class MaintenanceController extends Controller{
         $maintenance = Maintenance::findOrFail($id);
         $machines = Machine::all();
         return view('maintenances.edit', compact('maintenance', 'machines'));
-
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'date' => 'required|date',
-            'kilometers' => 'required|integer',
-            'description' => 'required|string',
-            'machine_id' => 'required|exists:machines,id',
-        ]);
+        $request->validate(['date' => 'required|date','kilometers' => 'required|integer','description' => 'required|string','machine_id' => 'required|exists:machines,id',]);
 
         $maintenance = Maintenance::findOrFail($id);
         $maintenance->update([
@@ -71,17 +59,39 @@ class MaintenanceController extends Controller{
             'description' => $request->description,
             'machine_id' => $request->machine_id,
         ]);
-
         return redirect()->route('maintenances.index')->with('success', 'Mantenimiento actualizado.');
     }
 
- public function show($machine_id)
+ public function show(Request $request)
 {
-    $machine = Machine::with(['maintenances' => function ($query) {
-        $query->orderBy('date', 'desc');
-    }])->findOrFail($machine_id);
+    $id = $request->input('machine_id');
 
-    return view('maintenances.show', compact('machine'));
+    $machine = Machine::findOrFail($id);
+
+    $maintenances = $machine->maintenances()
+        ->where('type', 'maintenance')
+        ->orderBy('date', 'desc')
+        ->get();
+
+    return view('maintenances.show', compact('machine', 'maintenances'));
 }
 
+
+
+    public function reminders()
+    {
+        $machines = Machine::all();
+        $maintenances = Maintenance::with(['machine', 'user'])
+            ->where('type', 'reminder')  
+            ->orderBy('date', 'desc')
+            ->paginate(10);
+        return view('maintenances.reminders', compact('maintenances', 'machines'));
+    }
+
+    public function destroy($id)
+    {
+        $maintenance = Maintenance::findOrFail($id);
+        $maintenance->delete();
+        return redirect()->back()->with('success', 'Recordatorio eliminado correctamente.');
+    }
 }
