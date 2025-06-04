@@ -104,7 +104,35 @@ Finalmente, inicia el servidor de desarrollo de Laravel:
 9. Acceder al sistema
     
 Abre tu navegador y entra a la URL indicada para comenzar a usar el sistema.
+##
 
+
+⚠️ Configuración del envío de emails
+
+En el archivo .env.example ya encontrarás las variables necesarias para configurar el envío de correos electrónicos, pero están comentadas para que las completes con tus datos reales.
+
+Para activar el envío de emails, debes:
+
+
+Descomentar esas líneas en tu archivo .env (quitar el símbolo #).
+
+Reemplazar los valores de ejemplo con los datos correctos según el proveedor de correo que uses (Gmail, SMTP propio, email temporal, etc.).
+
+Ejemplo de las variables que debes configurar:
+
+    MAIL_MAILER=smtp
+    MAIL_HOST=TU_PROVEEDOR_DE_EMAIL
+    MAIL_PORT=587
+    MAIL_USERNAME=tu_correo@gmail.com
+    MAIL_PASSWORD=tu_contraseña_de_aplicación
+    MAIL_ENCRYPTION=tls
+    MAIL_FROM_ADDRESS=tu_correo@gmail.com
+    MAIL_FROM_NAME="Tu Nombre"
+
+
+Importante: Algunos proveedores, como Gmail, pueden requerir configuraciones adicionales, como contraseñas específicas para aplicaciones o permitir acceso a apps menos seguras.
+
+Sin esta configuración personalizada, la funcionalidad de envío de emails no funcionará correctamente.
 
 
 
