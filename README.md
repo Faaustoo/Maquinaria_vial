@@ -134,6 +134,11 @@ Importante: Algunos proveedores, como Gmail, pueden requerir configuraciones adi
 
 Sin esta configuración personalizada, la funcionalidad de envío de emails no funcionará correctamente.
 
+##
+El sistema incluye un usuario administrador preconfigurado para pruebas:
+
+    - Email: admin@example.com  
+    - Contraseña: admin
 
 
 
