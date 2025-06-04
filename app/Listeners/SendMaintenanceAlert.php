@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events\MaintenanceAlert;
 use App\Models\Assignment;
 use App\Models\Maintenance;
+use App\Models\Parameter;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -31,15 +32,20 @@ class SendMaintenanceAlert
             }
 
         $diferencia = $machine->kilometers - $maintenanceKm;
+        $valor = Parameter::first()->value;
 
-        if ($diferencia > 5000) {
-            $mensaje = "Hola,\n\n La máquina {$machine->serial_number} ha superado los 5,000 km sin mantenimiento.
+
+        if ($diferencia > $valor) {
+        
+            $mensaje = "Hola,\n\n La máquina {$machine->serial_number} ha superado los {$valor} km sin mantenimiento.
             \n\nPor favor, lleve la maquina a mantenimento  para evitar problemas.";
             
-            Mail::raw($mensaje, function ($mail) { 
-                $mail->to('fausto.parada12@gmail.com');
-                $mail->subject('Aviso de mantenimiento');
-            });
+            Mail::raw($mensaje, function ($mail) use ($machine) { 
+            $mail->to($machine->email);
+            $mail->subject('Aviso de mantenimiento');
+});
+
+
 
             Maintenance::create([
                 'date' => now(),

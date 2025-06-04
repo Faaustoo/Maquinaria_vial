@@ -14,6 +14,7 @@ class Machine extends Model
         'serial_number',
         'model',
         'kilometers',
+        'email',
         'type_id',
     ];
 
@@ -30,6 +31,11 @@ class Machine extends Model
     public function assignments()
     {
         return $this->hasMany(Assignment::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 
 

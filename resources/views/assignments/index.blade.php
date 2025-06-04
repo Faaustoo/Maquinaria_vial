@@ -1,8 +1,9 @@
 <x-app-layout>
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8 text-white">
-        <!-- Acciones superiores -->
+
         <div class="mb-4 flex justify-between items-center">
             <a href="{{ route('assignments.create') }}"  class="inline-block px-4 py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700 transition">  <i class="fas fa-square-plus"></i></a></a>
+            <a href="{{ route('assignments.pdf') }}" target="_blank" class="inline-block px-4 py-2 bg-red-600 text-white font-semibold rounded hover:bg-red-700 transition">Exportar <i class="fas fa-file-pdf ml-2"></i></a>
             <a href="{{ route('assignments.viewFinished') }}" class="inline-block px-4 py-2 bg-gray-600 text-white font-semibold rounded hover:bg-gray-700 transition"> <i class="fas fa-eye mr-2"></i>Finalizadas</a>
         </div>
 
@@ -13,13 +14,13 @@
         @endif
 
         <div class="bg-gray-800 p-6 rounded shadow">
-            <h3 class="text-lg font-semibold text-center text-white mb-4">Máquinas en obras</h3>
+            <h3 class="text-lg font-semibold text-center text-white mb-4">Maquinas en obras</h3>
 
             <table class="min-w-full table-auto border border-gray-700 rounded overflow-hidden">
                 <thead>
                     <tr class="bg-gray-700">
                         <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Obra</th>
-                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Máquina</th>
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Maquina</th>
                         <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Fecha de inicio</th>
                         <th class="py-2 px-4 border-b border-gray-600 text-center text-white">Acciones</th>
                     </tr>
@@ -47,5 +48,10 @@
                 {{ $assignments->links() }}
             </div>
         </div>
+
+
+
+
+
     </div>
 </x-app-layout>

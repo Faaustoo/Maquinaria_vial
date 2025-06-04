@@ -1,7 +1,6 @@
 <x-app-layout>
-    <div class="max-w-xl mx-auto p-2"> <!-- Igual que el formulario de máquinas -->
-      
-        <form action="{{ route('projects.store') }}" method="POST" class="bg-white dark:bg-gray-800 p-4 rounded shadow"> <!-- p-6 a p-4 para igualar -->
+    <div class="max-w-xl mx-auto p-2"> 
+        <form action="{{ route('projects.store') }}" method="POST" class="bg-white dark:bg-gray-800 p-4 rounded shadow"> 
             @csrf
 
             <div class="flex justify-end mb-4">
@@ -10,38 +9,21 @@
                 </a>
             </div>
 
-            <div class="mb-3"> <!-- mb-4 a mb-3 para igualar -->
-                <label for="name" class="block text-gray-700 dark:text-gray-200 mb-1 text-sm">Nombre</label> <!-- text-sm igual que máquinas -->
-                <input 
-                    type="text" 
-                    name="name" 
-                    id="name" 
-                    class="w-full border border-gray-300 dark:border-gray-600 rounded p-1.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" 
-                     value="{{ old('name') }}"
-            
-                >
+            <div class="mb-3"> 
+                <label for="name" class="block text-gray-700 dark:text-gray-200 mb-1 text-sm">Nombre</label>
+                <input type="text" name="name" id="name" class="w-full border border-gray-300 dark:border-gray-600 rounded p-1.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm" 
+                    value="{{ old('name') }}">
             </div>
 
             <div class="mb-3">
                 <label for="start_date" class="block text-gray-700 dark:text-gray-200 mb-1 text-sm">Fecha de inicio</label>
-                <input 
-                    type="date" 
-                    name="start_date" 
-                    id="start_date" 
-                    class="w-full border border-gray-300 dark:border-gray-600 rounded p-1.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    value="{{ old('start_date') }}"
-                    required
-                >
+                <input type="date" name="start_date" id="start_date" class="w-full border border-gray-300 dark:border-gray-600 rounded p-1.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    value="{{ old('start_date') }}">
             </div>
 
             <div class="mb-3">
                 <label for="province_id" class="block text-gray-700 dark:text-gray-200 mb-1 text-sm">Provincia</label>
-                <select 
-                    name="province_id" 
-                    id="province_id" 
-                    class="w-full border border-gray-300 dark:border-gray-600 rounded p-1.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-                    required
-                >
+                <select name="province_id" id="province_id"  class="w-full border border-gray-300 dark:border-gray-600 rounded p-1.5 bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                     <option value="" disabled {{ old('province_id') ? '' : 'selected' }}>Seleccione una provincia</option>
                     @foreach ($provinces as $province)
                         <option value="{{ $province->id }}" {{ old('province_id') == $province->id ? 'selected' : '' }}>

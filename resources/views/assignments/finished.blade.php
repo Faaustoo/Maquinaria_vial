@@ -12,7 +12,7 @@
                     <tr class="bg-gray-700">
                         <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Fecha inicio</th>
                         <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Fecha fin</th>
-                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Máquina</th>
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Maquina</th>
                         <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Obra</th>
                         <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Km recorridos</th>
                     </tr>

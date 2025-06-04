@@ -28,7 +28,18 @@ class ProjectController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate(['name' => 'required|string','start_date' => 'required|date','end_date' => 'nullable|date','province_id' => 'required|exists:provinces,id',]);
+        $request->validate([ 'name' => ['required', 'regex:/^[a-zA-Z0-9 ]+$/', 'max:100'],
+                            'start_date'=>'required|date',
+                            'end_date'=>'nullable|date',
+                            'province_id'=>'required|exists:provinces,id',
+                            ],[
+                            'name.required' => 'El nombre es obligatorio.',
+                            'name.regex' => 'El nombre solo puede contener letras, números y espacios.',
+                            'name.max' => 'El nombre no puede tener más de 100 caracteres.',
+                            'start_date.required'=>'La fecha de inicio es obligatoria.',
+                            'start_date.date'=>'La fecha de inicio debe tener un formato válido.',
+                            'province_id.required'=>'La provincia es obligatoria.',
+                            ]);
 
         $project = new Project();
         $project->name = $request->name;
@@ -48,7 +59,19 @@ class ProjectController extends Controller
 
     public function update(Request $request,$id)
     {
-        $request->validate(['name' => 'required|string','start_date' => 'required|date','end_date' => 'nullable|date','province_id' => 'required|exists:provinces,id',]);
+        $request->validate(['name' => ['required', 'regex:/^[a-zA-Z0-9 ]+$/', 'max:100'],
+                            'start_date' => 'required|date',
+                            'end_date' => 'nullable|date',
+                            'province_id' => 'required|exists:provinces,id',
+                            ], [
+                            'name.required' => 'El nombre es obligatorio.',
+                            'name.regex' => 'El nombre solo puede contener letras, números y espacios.',
+                            'name.max' => 'El nombre no puede tener más de 100 caracteres.',
+                            'start_date.required' => 'La fecha de inicio es obligatoria.',
+                            'start_date.date' => 'La fecha de inicio debe ser una fecha válida.',
+                            'province_id.required' => 'La provincia es obligatoria.',
+                            ]);
+
 
         $project = Project::findOrFail($id);
         $project->name = $request->name;
@@ -68,7 +91,7 @@ class ProjectController extends Controller
             return view('projects.finished', compact('projects'));
     }
 
-   public function showFinalizeForm($id)
+    public function showFinalizeForm($id)
     {
         $project = Project::findOrFail($id);
         $endReasons = EndReason::all();
@@ -85,9 +108,18 @@ public function finish(Request $request, $id)
                     return redirect()->back()->withErrors('Error la obra porque tiene asignaciones activas.');
                 }
 
-        $validated = $request->validate(['end_date' => 'required|date','reason_id' => 'required|exists:end_reasons,id',]);
-        $project->end_date = $validated['end_date'];
-        $project->reason_id = $validated['reason_id'];
+        $request->validate(['end_date'  => 'required|date|after_or_equal:start_date',
+                            'reason_id' => 'required|exists:end_reasons,id',
+                            ],[
+                            'end_date.required' => 'La fecha de finalización es obligatoria.',
+                            'end_date.date'=> 'La fecha de finalización debe ser una fecha válida.',
+                            'end_date.after_or_equal'=> 'La fecha de finalización debe ser igual o posterior a la fecha de inicio.',
+                            'reason_id.required'=> 'La razón es obligatoria.',
+                            ]);
+
+
+        $project->end_date = $request->end_date;
+        $project->reason_id = $request->reason_id;
         $project->save();
         return redirect()->route('projects.index')->with('success', 'Obra finalizada con exito.');
     }

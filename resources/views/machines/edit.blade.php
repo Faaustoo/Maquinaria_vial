@@ -14,13 +14,22 @@
 
             <div class="mb-4">
                 <label for="serial_number" class="block text-white font-semibold mb-1">Número de Serie</label>
-                <input   type="text"   name="serial_number"   id="serial_number"  class="w-full bg-gray-900 text-white border border-gray-600 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"  value="{{ old('serial_number', $machine->serial_number) }}"  >
+                <input type="text" name="serial_number" id="serial_number" class="w-full bg-gray-900 text-white border border-gray-600 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"  
+                    value="{{ old('serial_number', $machine->serial_number) }}"  >
             </div>
 
             <div class="mb-4">
                 <label for="model" class="block text-white font-semibold mb-1">Modelo</label>
-                <input type="text" name="model"  id="model" class="w-full bg-gray-900 text-white border border-gray-600 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"value="{{ old('model', $machine->model) }}">
+                <input type="text" name="model"  id="model" class="w-full bg-gray-900 text-white border border-gray-600 rounded p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    value="{{ old('model', $machine->model) }}">
             </div>
+
+            <div class="mb-3">
+                <label for="email" class="block text-white font-semibold mb-1 text-sm">Responsable (Email)</label>
+                <input type="email" name="email" id="email" class="w-full bg-gray-900 text-white border border-gray-600 rounded p-1.5 focus:outline-none focus:ring-2 focus:ring-blue-500" 
+                    value="{{ old('email', $machine->email) }}">
+            </div>
+
 
             <div class="mb-4">
                 <label for="type_id" class="block text-white font-semibold mb-1">Tipo de Máquina</label>
@@ -36,7 +45,7 @@
             <button type="submit" class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"> Guardar cambios </button>
 
             @if ($errors->any())
-                <div class="bg-red-100 text-red-700 p-4 rounded mt-4">
+                <div class="bg-red-100 text-red-700 p-3 rounded mt-3 text-sm">
                     <ul class="list-disc list-inside">
                         @foreach ($errors->all() as $error)
                             <li>- {{ $error }}</li>

@@ -11,39 +11,57 @@
             </div>
         @endif
 
+
         <div class="bg-gray-800 p-6 rounded shadow">
-            <h3 class="text-lg font-semibold text-center text-white mb-4">Máquinas registradas</h3>
+            <h3 class="text-lg font-semibold text-center text-white mb-4">Maquinas registradas</h3>
 
             <table class="min-w-full table-auto border border-gray-700 rounded overflow-hidden">
                 <thead>
                     <tr class="bg-gray-700">
-                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Número de serie</th>
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Numero de serie</th>
                         <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Modelo</th>
                         <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Tipo de Máquina</th>
-                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Kilómetros</th>
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Kilometros</th>
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Email responsable</th>
+                        <th class="py-2 px-4 border-b border-gray-600 text-left text-white">Estado</th>
                         <th class="py-2 px-4 border-b border-gray-600 text-center text-white">Acciones</th>
                     </tr>
                 </thead>
                 <tbody id="results-body">
                     @foreach ($machines as $machine)
+
+                    @php
+                        $statusColor = match($machine->status->status) {
+                            'libre' => 'bg-green-300',
+                            'asignada' => 'bg-red-300',
+                        };
+                    @endphp
+
                         <tr class="hover:bg-gray-200 hover:text-black transition">
                             <td class="py-2 px-4 border-b border-gray-700">{{ $machine->serial_number }}</td>
                             <td class="py-2 px-4 border-b border-gray-700">{{ $machine->model }}</td>
                             <td class="py-2 px-4 border-b border-gray-700">{{ $machine->machineType->name }}</td>
-                            <td class="py-2 px-4 border-b border-gray-700">{{ $machine->kilometers }}</td>
+                            <td class="py-2 px-4 border-b border-gray-700">{{ number_format($machine->kilometers, 0, ',', '.') }} km</td>
+                            <td class="py-2 px-4 border-b border-gray-700">{{ $machine->email }}</td>
+                            <td class="border-b border-gray-700 text-center">
+                                <div class="w-14 h-6 rounded-full shadow-sm mx-auto {{ $statusColor }} flex items-center justify-center text-black text-xs font-semibold">
+                                    @if ($machine->status->status === 'asignada')
+                                        Asignada
+                                    @else
+                                        Libre
+                                    @endif
+                                </div>
+                            </td>
                             <td class="py-2 px-4 border-b border-gray-700 whitespace-nowrap text-center" >
                                 <a href="{{ route('machines.show', $machine->id) }}" class="text-yellow-400 hover:text-yellow-600 font-semibold mr-4 transition">
                                     <i class="fas fa-eye"></i>
                                 </a>
-
                                 <a href="{{ route('machines.edit', $machine->id) }}" class="text-blue-400 hover:text-blue-600 font-semibold mr-4 transition">
                                     <i class="fas fa-edit"></i>
                                 </a>
-
                                 <button type="button" class="text-red-500 hover:text-red-700 font-semibold transition" onclick="abrirModal({{ $machine->id }})">
                                     <i class="fas fa-trash"></i>
                                 </button>
-
                             </td>
                         </tr>
                     @endforeach

@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('provinces', function (Blueprint $table) {
+        Schema::create('parameters', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->decimal('latitude', 10, 7)->nullable();
-            $table->decimal('longitude', 10, 7)->nullable();
-            $table->timestamps();
+            $table->integer('value');
+            $table->timestamps(); 
         });
     }
 
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('provinces');
+        Schema::dropIfExists('parameters');
     }
 };

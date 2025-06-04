@@ -1,10 +1,9 @@
 <x-app-layout>
     <div class="py-6 max-w-7xl mx-auto sm:px-6 lg:px-8 text-white">
         <div class="mb-4">
-            <a href="{{ route('projects.index') }}"
-           class="inline-block mb-6 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">
-             <i class="fas fa-arrow-circle-left mr-1"></i> Volver
-        </a>
+            <a href="{{ route('projects.index') }}" class="inline-block mb-6 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">
+                <i class="fas fa-arrow-circle-left mr-1"></i> Volver
+            </a>
         </div>
 
         <h3 class="text-lg font-semibold text-center mb-4 text-white">Obras Finalizadas</h3>
@@ -29,12 +28,11 @@
                             <tr class="hover:bg-gray-200 hover:text-black transition">
                                 <td class="py-2 px-4 border-b border-gray-700">{{ $project->name }}</td>
                                 <td class="py-2 px-4 border-b border-gray-700">{{\Carbon\Carbon::parse($project->start_date)->format('d/m/Y')  }}</td>
-                                <td class="py-2 px-4 border-b border-gray-700">{{ \Carbon\Carbon::parse($project->END_date)->format('d/m/Y') }}</td>
+                                <td class="py-2 px-4 border-b border-gray-700">{{ \Carbon\Carbon::parse($project->end_date)->format('d/m/Y') }}</td>
                                 <td class="py-2 px-4 border-b border-gray-700">{{ $project->endReason->description }}</td> 
                                 <td class="py-2 px-4 border-b border-gray-700">{{ $project->province->name }}</td>
                                 <td class="py-2 px-4 border-b border-gray-700 whitespace-nowrap text-center">
-                                    <a href="{{ route('showFinishedMachines', $project->id) }}" 
-                                       class="text-yellow-400 hover:text-yellow-600 font-semibold transition">
+                                    <a href="{{ route('showFinishedMachines', $project->id) }}" class="text-yellow-400 hover:text-yellow-600 font-semibold transition">
                                         <i class="fas fa-eye"></i>
                                     </a>
                                 </td>

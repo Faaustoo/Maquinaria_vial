@@ -17,9 +17,11 @@ class DatabaseSeeder extends Seeder
             ProvinceSeeder::class,
             EndReasonSeeder::class,
             ProjectSeeder::class,
+            StatusSeeder::class,
             MachineSeeder::class,
             MaintenanceSeeder::class,
             AssignmentSeeder::class,
+            ParameterSeeder::class,
         ]);
     }
 }

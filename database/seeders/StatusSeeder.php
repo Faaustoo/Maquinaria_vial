@@ -2,17 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\Province;
+use App\Models\Status;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ProvinceSeeder extends Seeder
+class StatusSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        Province::factory(24)->create();
+        Status::factory()->count(2)->create();
     }
 }
+
+
+
+
+
+
+

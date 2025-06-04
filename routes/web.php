@@ -3,6 +3,7 @@
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\MachineController;
 use App\Http\Controllers\MaintenanceController;
+use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/machines', [MachineController::class, 'index'])->name('machines.index');
     Route::get('/machines/create', [MachineController::class, 'create'])->name('machines.create');
     Route::post('/machines', [MachineController::class, 'store'])->name('machines.store');
+    Route::get('/machines/location', [MachineController::class, 'location'])->name('machines.location');
     Route::get('/machines/{id}/edit', [MachineController::class, 'edit'])->name('machines.edit');
     Route::put('/machines/{id}', [MachineController::class, 'update'])->name('machines.update');
     Route::delete('/machines/{id}', [MachineController::class, 'destroy'])->name('machines.destroy');
@@ -64,6 +66,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('assignments/{id}/finish', [AssignmentController::class, 'finishForm'])->name('assignments.finishForm');
     Route::post('assignments/{id}/finish', [AssignmentController::class, 'finish'])->name('assignments.finish');
     Route::get('/assignments/finished', [AssignmentController::class, 'viewFinished'])->name('assignments.viewFinished');
+    //exportar en pdf
+    Route::get('/assignments/pdf', [AssignmentController::class, 'pdf'])->name('assignments.pdf');
 });
 
 
@@ -72,6 +76,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/parameters', [ParameterController::class, 'edit'])->name('parameters.edit');
+    Route::put('/parameters', [ParameterController::class, 'update'])->name('parameters.update');
 });
+
+
 
 require __DIR__.'/auth.php';

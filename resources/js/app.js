@@ -1,5 +1,7 @@
 import './Machine/create';
 import './Machine/modal';
+import './Machine/map';
+
 import './Maintenance/eliminar';
 
 

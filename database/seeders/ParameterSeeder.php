@@ -2,17 +2,18 @@
 
 namespace Database\Seeders;
 
-use App\Models\Province;
+use App\Models\Parameter;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use PHPUnit\Framework\MockObject\Rule\Parameters;
 
-class ProvinceSeeder extends Seeder
+class ParameterSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Province::factory(24)->create();
+        Parameter::factory(1)->create();
     }
 }

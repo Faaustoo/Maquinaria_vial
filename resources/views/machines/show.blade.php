@@ -22,15 +22,19 @@
                     </tr>
                     <tr class="border-b border-gray-700">
                         <td class="py-1.5 px-3 font-semibold">Kilometros</td>
-                        <td class="py-1.5 px-3">{{ $machine->kilometers }}</td>
+                        <td class="py-2 px-4 border-b border-gray-700">{{ number_format($machine->kilometers, 0, ',', '.') }} km</td>
                     </tr>
                     <tr class="border-b border-gray-700">
                         <td class="py-1.5 px-3 font-semibold">Tipo de maquina</td>
                         <td class="py-1.5 px-3">{{ $machine->machineType->name }}</td>
                     </tr>
+                    <tr class="border-b border-gray-700">
+                        <td class="py-1.5 px-3 font-semibold">Email del responsable de la maquina</td>
+                        <td class="py-1.5 px-3">{{ $machine->email }}</td>
+                    </tr>
                     <tr>
                         <td class="py-1.5 px-3 font-semibold">Estado de la maquina</td>
-                        <td class="py-1.5 px-3">{{ $estado }}</td>
+                        <td class="py-1.5 px-3">{{ $estado}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -42,7 +46,7 @@
                     <thead class="bg-gray-700">
                         <tr>
                             <th class="py-1.5 px-3 text-left text-white">Usuario</th>
-                            <th class="py-1.5 px-3 text-left text-white">Fecha de asignación</th>
+                            <th class="py-1.5 px-3 text-left text-white">Fecha de asignacion</th>
                             <th class="py-1.5 px-3 text-left text-white">Provincia</th>
                             <th class="py-1.5 px-3 text-left text-white">Obra</th>
                         </tr>
