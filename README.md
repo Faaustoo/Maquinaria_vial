@@ -137,8 +137,12 @@ Sin esta configuración personalizada, la funcionalidad de envío de emails no f
 ##
 El sistema incluye un usuario administrador preconfigurado para pruebas:
 
-    - Email: admin@example.com  
-    - Contraseña: admin
+- Email:
+
+      admin@example.com  
+- Contraseña:
+
+       admin
 
 
 
