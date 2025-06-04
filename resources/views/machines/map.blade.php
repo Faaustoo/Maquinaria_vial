@@ -17,5 +17,6 @@
     </script>
 
 
-    <script src="{{ mix('js/Machine/map.js') }}"></script>
+@vite('resources/js/Machine/map.js')
+
 </x-app-layout>
